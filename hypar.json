@@ -1,0 +1,36 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "8ff8ac8b-dd9f-4679-9453-075ed57555d8",
+  "name": "LineCase",
+  "description": "The LineCase function.",
+  "language": "C#",
+  "overrides": {
+    "Guides": {
+      "context": "[*discriminator=Elements.Guide]",
+      "identity": {
+        "Add Id": {
+          "type": "string"
+        }
+      },
+      "behaviors": {
+        "add": {
+          "schema": {
+            "Polyline": {
+              "$ref": "https://schemas.hypar.io/Polyline.json"
+            }
+          }
+        },
+        "remove": true
+      },
+      "schema": {
+        "Polyline": {
+          "$ref": "https://schemas.hypar.io/Polyline.json"
+        }
+      }
+    }
+  },
+  "outputs": [],
+  "repository_url": "https://github.com/hypar-io/function",
+  "last_updated": "0001-01-01T00:00:00",
+  "cli_version": "1.8.0"
+}
