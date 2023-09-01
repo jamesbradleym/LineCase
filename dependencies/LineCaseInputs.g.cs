@@ -59,17 +59,18 @@ namespace LineCase
         public Overrides() { }
         
         [Newtonsoft.Json.JsonConstructor]
-        public Overrides(OverrideAdditions @additions, OverrideRemovals @removals, IList<GuidesOverride> @guides)
+        public Overrides(OverrideAdditions @additions, OverrideRemovals @removals, IList<GuidesOverride> @guides, IList<MillworkOverride> @millwork)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<Overrides>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @additions, @removals, @guides});
+                validator.PreConstruct(new object[]{ @additions, @removals, @guides, @millwork});
             }
         
             this.Additions = @additions ?? this.Additions;
             this.Removals = @removals ?? this.Removals;
             this.Guides = @guides ?? this.Guides;
+            this.Millwork = @millwork ?? this.Millwork;
         
             if(validator != null)
             {
@@ -85,6 +86,9 @@ namespace LineCase
     
         [Newtonsoft.Json.JsonProperty("Guides", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public IList<GuidesOverride> Guides { get; set; } = new List<GuidesOverride>();
+    
+        [Newtonsoft.Json.JsonProperty("Millwork", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public IList<MillworkOverride> Millwork { get; set; } = new List<MillworkOverride>();
     
     }
     
@@ -178,6 +182,41 @@ namespace LineCase
     
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public GuidesValue Value { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
+    
+    public partial class MillworkOverride 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public MillworkOverride(string @id, MillworkIdentity @identity, MillworkValue @value)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<MillworkOverride>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @id, @identity, @value});
+            }
+        
+            this.Id = @id;
+            this.Identity = @identity;
+            this.Value = @value;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Identity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MillworkIdentity Identity { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MillworkValue Value { get; set; }
     
     }
     
@@ -298,6 +337,94 @@ namespace LineCase
     
         [Newtonsoft.Json.JsonProperty("Polyline", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Polyline Polyline { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
+    
+    public partial class MillworkIdentity 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public MillworkIdentity(string @iD)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<MillworkIdentity>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @iD});
+            }
+        
+            this.ID = @iD;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("ID", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ID { get; set; }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v13.0.0.0)")]
+    
+    public partial class MillworkValue 
+    
+    {
+        [Newtonsoft.Json.JsonConstructor]
+        public MillworkValue(string @millworkType, double? @width, double? @depth, double? @height, int @shelfCount, bool @open, int @cabinetShelfCount, string @doorType, double @counterOverhang)
+        {
+            var validator = Validator.Instance.GetFirstValidatorForType<MillworkValue>();
+            if(validator != null)
+            {
+                validator.PreConstruct(new object[]{ @millworkType, @width, @depth, @height, @shelfCount, @open, @cabinetShelfCount, @doorType, @counterOverhang});
+            }
+        
+            this.MillworkType = @millworkType;
+            this.Width = @width;
+            this.Depth = @depth;
+            this.Height = @height;
+            this.ShelfCount = @shelfCount;
+            this.Open = @open;
+            this.CabinetShelfCount = @cabinetShelfCount;
+            this.DoorType = @doorType;
+            this.CounterOverhang = @counterOverhang;
+        
+            if(validator != null)
+            {
+                validator.PostConstruct(this);
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Millwork Type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string MillworkType { get; set; } = "Shelving";
+    
+        [Newtonsoft.Json.JsonProperty("Width", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Width { get; set; } = 1D;
+    
+        [Newtonsoft.Json.JsonProperty("Depth", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Depth { get; set; } = 1D;
+    
+        [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Height { get; set; } = 1D;
+    
+        [Newtonsoft.Json.JsonProperty("Shelf Count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(int.MinValue, 100)]
+        public int ShelfCount { get; set; } = -1;
+    
+        [Newtonsoft.Json.JsonProperty("Open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool Open { get; set; } = true;
+    
+        [Newtonsoft.Json.JsonProperty("Cabinet Shelf Count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(int.MinValue, 100)]
+        public int CabinetShelfCount { get; set; } = -1;
+    
+        [Newtonsoft.Json.JsonProperty("Door Type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DoorType { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("Counter Overhang", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double CounterOverhang { get; set; } = 1D;
     
     }
     

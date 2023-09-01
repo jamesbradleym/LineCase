@@ -27,6 +27,134 @@
           "$ref": "https://schemas.hypar.io/Polyline.json"
         }
       }
+    },
+    "Millwork": {
+      "context": "[*discriminator=Elements.Millwork.Millwork | discriminator=Elements.Millwork.Shelving | discriminator=Elements.Millwork.Bar | discriminator=Elements.Millwork.Counter | discriminator=Elements.Millwork.Cabinet | discriminator=Elements.Millwork.Display]",
+      "identity": {
+        "ID": {
+          "type": "string"
+        }
+      },
+      "schema": {
+        "Millwork Type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparOrder": 0,
+          "$hyparAutocomplete": [
+            "Shelving",
+            "Cabinet",
+            "Bar",
+            "Counter",
+            "Display"
+          ],
+          "default": "Shelving"
+        },
+        "Width": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "$hyparUnitType": "length",
+          "default": 1,
+          "$hyparOrder": 1
+        },
+        "Depth": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "$hyparUnitType": "length",
+          "default": 1,
+          "$hyparOrder": 2
+        },
+        "Height": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "$hyparUnitType": "length",
+          "default": 1,
+          "$hyparOrder": 3
+        },
+        "Shelf Count": {
+          "type": "integer",
+          "default": -1,
+          "maximum": 100,
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Millwork Type",
+                "value": "Shelving"
+              }
+            ]
+          },
+          "$hyparOrder": 10
+        },
+        "Open": {
+          "type": "boolean",
+          "default": true,
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Millwork Type",
+                "value": "Shelving"
+              }
+            ]
+          },
+          "$hyparOrder": 11
+        },
+        "Cabinet Shelf Count": {
+          "type": "integer",
+          "default": -1,
+          "maximum": 100,
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Millwork Type",
+                "value": "Cabinet"
+              }
+            ]
+          },
+          "$hyparOrder": 10
+        },
+        "Door Type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$hyparOrder": 11,
+          "$hyparAutocomplete": [
+            "Single",
+            "Double"
+          ],
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Millwork Type",
+                "value": "Cabinet"
+              }
+            ]
+          }
+        },
+        "Counter Overhang": {
+          "type": "number",
+          "default": 1,
+          "$hyparShowIf": {
+            "conditions": [
+              {
+                "property": "Millwork Type",
+                "value": "Counter"
+              }
+            ]
+          },
+          "$hyparUnitType": "length",
+          "$hyparOrder": 10
+        }
+      },
+      "perProperty": true,
+      "paradigm": "edit"
     }
   },
   "outputs": [],

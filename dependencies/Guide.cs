@@ -56,8 +56,8 @@ namespace Elements
             var solidRep = new Solid();
 
             // Define parameters for the extruded circle and spherical point
-            var circleRadius = 0.1;
-            var pointRadius = 0.2;
+            var circleRadius = 0.025;
+            var pointRadius = 0.05;
 
             // Create an extruded circle along each line segment of the polyline
             for (int i = 0; i < Polyline.Vertices.Count - 1; i++)
