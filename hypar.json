@@ -48,8 +48,7 @@
             "Bar",
             "Counter",
             "Display"
-          ],
-          "default": "Shelving"
+          ]
         },
         "Width": {
           "type": [
@@ -77,6 +76,11 @@
           "$hyparUnitType": "length",
           "default": 1,
           "$hyparOrder": 3
+        },
+        "Extend": {
+          "type": "boolean",
+          "default": false,
+          "$hyparOrder": 20
         },
         "Shelf Count": {
           "type": "integer",
@@ -158,7 +162,7 @@
     }
   },
   "outputs": [],
-  "repository_url": "https://github.com/hypar-io/function",
+  "repository_url": "https://github.com/jamesbradleym/LineCase",
   "last_updated": "0001-01-01T00:00:00",
   "cli_version": "1.8.0"
 }

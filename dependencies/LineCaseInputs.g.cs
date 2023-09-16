@@ -373,18 +373,19 @@ namespace LineCase
     
     {
         [Newtonsoft.Json.JsonConstructor]
-        public MillworkValue(string @millworkType, double? @width, double? @depth, double? @height, int @shelfCount, bool @open, int @cabinetShelfCount, string @doorType, double @counterOverhang)
+        public MillworkValue(string @millworkType, double? @width, double? @depth, double? @height, bool @extend, int @shelfCount, bool @open, int @cabinetShelfCount, string @doorType, double @counterOverhang)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<MillworkValue>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @millworkType, @width, @depth, @height, @shelfCount, @open, @cabinetShelfCount, @doorType, @counterOverhang});
+                validator.PreConstruct(new object[]{ @millworkType, @width, @depth, @height, @extend, @shelfCount, @open, @cabinetShelfCount, @doorType, @counterOverhang});
             }
         
             this.MillworkType = @millworkType;
             this.Width = @width;
             this.Depth = @depth;
             this.Height = @height;
+            this.Extend = @extend;
             this.ShelfCount = @shelfCount;
             this.Open = @open;
             this.CabinetShelfCount = @cabinetShelfCount;
@@ -398,7 +399,7 @@ namespace LineCase
         }
     
         [Newtonsoft.Json.JsonProperty("Millwork Type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string MillworkType { get; set; } = "Shelving";
+        public string MillworkType { get; set; }
     
         [Newtonsoft.Json.JsonProperty("Width", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double? Width { get; set; } = 1D;
@@ -408,6 +409,9 @@ namespace LineCase
     
         [Newtonsoft.Json.JsonProperty("Height", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double? Height { get; set; } = 1D;
+    
+        [Newtonsoft.Json.JsonProperty("Extend", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool Extend { get; set; } = false;
     
         [Newtonsoft.Json.JsonProperty("Shelf Count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(int.MinValue, 100)]

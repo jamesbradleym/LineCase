@@ -36,10 +36,12 @@ namespace LineCase
       List<Millwork> millwork = new List<Millwork>();
       foreach (var guide in guides)
       {
+
+        Line lastSegment = null;
+        double lastThickness = 0.0;
         var segmentCounter = 0;
         foreach (var segment in guide.Polyline.Segments())
         {
-          var lines = segment.DivideByLength(1).Zip(segment.DivideByLength(1).Skip(1), (start, end) => new Line(start, end));
           var lineCounter = 0;
           double curLength = 0.0;
           while (curLength < segment.Length())
@@ -52,20 +54,24 @@ namespace LineCase
               if (curLength + 1 < segment.Length())
               {
                 var line = new Line(segment.PointAtLength(curLength), segment.PointAtLength(curLength + 1));
-                var mw = new Millwork(line, 1, 1, 1, ID);
+                var _mwo = new MillworkOverride("", new MillworkIdentity(ID), new MillworkValue("Shelving", 1, 1, 1, false, -1, true, -1, null, -1));
+                var mw = new Shelving(line, _mwo);
 
+                lastThickness = 1.0;
                 millwork.Add(mw);
               }
-
               curLength += 1;
             }
             else
             {
-              var width = mwo.Value.Width ?? 1;
+              var extend = mwo.Value.Extend;
+              mwo.Value.Width = extend == true ? segment.Length() - curLength : mwo.Value.Width ?? 1.0;
 
-              if (curLength + width < segment.Length())
+              lastThickness = mwo.Value.Depth ?? 1.0;
+
+              if (curLength + mwo.Value.Width <= segment.Length())
               {
-                var line = new Line(segment.PointAtLength(curLength), segment.PointAtLength(curLength + width));
+                var line = new Line(segment.PointAtLength(curLength), segment.PointAtLength(curLength + (double)mwo.Value.Width));
 
                 switch (mwo?.Value.MillworkType)
                 {
@@ -85,16 +91,19 @@ namespace LineCase
                     millwork.Add(new Cabinet(line, mwo));
                     break;
                   default:
-                    millwork.Add(new Millwork(line, 1, 1, 1, ID));
+                    millwork.Add(new Shelving(line, mwo));
+                    // millwork.Add(new Millwork(line, 1, 1, 1, ID));
                     break;
                 }
               }
 
-              curLength += width;
+              curLength += (double)mwo.Value.Width;
             }
             lineCounter++;
           }
           segmentCounter++;
+
+          lastSegment = segment;
         }
       }
 
@@ -102,6 +111,7 @@ namespace LineCase
 
       output.Model.AddElements(guides);
       output.Model.AddElements(millwork);
+      // output.Model.AddElements(millwork.SelectMany(m => m.SubElements));
       output.Errors.AddRange(warnings);
 
       return output;

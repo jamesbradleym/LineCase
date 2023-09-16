@@ -13,6 +13,7 @@ namespace Elements.Millwork
         public double Height { get; set; }
         public double Depth { get; set; }
         public string Type { get; set; }
+        public List<SubElement> SubElements { get; set; }
 
         [JsonProperty("ID")]
         public string ID { get; set; }
@@ -24,6 +25,8 @@ namespace Elements.Millwork
             this.Height = height;
             this.Depth = depth;
             this.Type = type;
+
+            SubElements = new List<SubElement>();
 
             GenerateGeometry();
             SetMaterial();
@@ -40,6 +43,8 @@ namespace Elements.Millwork
             this.Height = millworkOverride.Value.Height ?? 1;
             this.Depth = millworkOverride.Value.Depth ?? 1;
             this.Type = millworkOverride.Value.MillworkType ?? "Shelving";
+
+            SubElements = new List<SubElement>();
 
             GenerateGeometry();
             SetMaterial();
@@ -89,33 +94,12 @@ namespace Elements.Millwork
 
         public void SetTransform()
         {
-            this.Transform = new Transform().Rotated(Vector3.ZAxis, GetAngle(Vector3.XAxis, Guide.Direction()) - 90).Moved(Guide.Start);
-        }
-
-        private double GetAngle(Vector3 vectorA, Vector3 vectorB, double tolerance = 0.0001f)
-        {
-            // Calculate the dot product of the vectors
-            double dotProduct = vectorA.Dot(vectorB);
-
-            // Calculate the magnitudes of the vectors
-            double magnitudeA = vectorA.Length();
-            double magnitudeB = vectorB.Length();
-
-            // Calculate the angle in radians using the arccosine function
-            double angleRadians = (double)Math.Acos(dotProduct / (magnitudeA * magnitudeB));
-
-            // Calculate the signed angle using the cross product to determine the direction
-            Vector3 crossProduct = vectorA.Cross(vectorB);
-            double signedAngle = Math.Sign(crossProduct.Z) * angleRadians;
-
-            // Convert the angle from radians to degrees
-            double angleDegrees = signedAngle * (180.0f / MathF.PI);
-
-            double roundedAngle = Math.Abs(angleDegrees - Math.Round(angleDegrees)) <= tolerance
-            ? (double)Math.Round(angleDegrees)
-            : angleDegrees;
-
-            return roundedAngle;
+            var g = Guide.Direction();
+            this.Transform = new Transform().Rotated(Vector3.ZAxis, Helper.GetAngle(Vector3.XAxis, Guide.Direction()) - 90).Moved(Guide.Start);
+            foreach (SubElement sub in SubElements)
+            {
+                sub.SetTransform(this.Transform);
+            }
         }
 
         public override bool Equals(object obj)
