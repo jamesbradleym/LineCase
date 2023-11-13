@@ -17,16 +17,13 @@ namespace LineCase
     public class LineCaseOutputs: SystemResults
     {
 
-
         /// <summary>
         /// Construct a LineCaseOutputs with default inputs.
         /// This should be used for testing only.
         /// </summary>
         public LineCaseOutputs() : base()
         {
-
         }
-
 
 	}
 }
